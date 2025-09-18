@@ -1,0 +1,197 @@
+<div class="_idGenObjectLayout-●">
+class="_idGenStoryDirection-●"
+	この２つを大きな要素として残す（ページ分割マークにする見込）
+	
+そのために、
+<div id="_idContainer●●●"
+から
+ id="_idContainer●●●"
+を消し、
+class="_idGenStoryDirection-1"
+を、
+<div class="_idGenStoryDirection-●"
+にする。
+
+<div class="_idGenObjectLayout-●">
+<div class="_idGenStoryDirection-●"
+を２大要素として使う
+
+
+要らない要素
+	ショルダーとか
+	カラのタグとか
+を、番号を●●で括って削除していく
+
+
+基本テキストフレーム
+も消す
+
+
+変換
+・ルビ
+	<ruby>倣<rt class="_idGenRuby-.">なら</rt></ruby>って
+		→　<ruby>倣<rt>なら</rt></ruby>って
+
+		<rt class="_idGenRuby-.">
+		→　<rt>
+
+・縦中横
+	<span class="_idGenCharOverride-.">19</span>歳の
+		→　<span class="tcy">19</span>歳の
+
+	<span class="見出し _idGenCharOverride-.">(.*?)</span>
+		→　<span class="tcy">$1</span>
+
+・インデントほか体裁
+	<p class="本文">
+		→　<p>
+
+	<p class="注釈">(.*?)</p>
+		→　<div class="start-4em h-indent-3em">			//かなり、例的
+			<p>$1</p>
+			</div>
+							//変換したあと、注釈の固まりをdivひとつで囲う手入れなど。
+							→				</div>
+											<div class="start-4em h-indent-3em">
+
+
+・h2
+	<span class="見出し">(.*?)</span>			//こっちを先にした方が良い（小さい方を先に処理がベター？）
+		→　$1
+		→　divタグで囲った方が良い
+								（例）
+								<div class="m-left-1em">
+									<h1>Q1　「良い歯医者さん」とは、どんな人ですか？</h1>
+								</div>
+
+
+	<p class="節">(.*?)</p>
+		→　<h2>$1</h2>
+
+<div class="h2">
+	<h2>$1</h2>
+</div>
+
+画像
+	<div class="基本グラフィックフレーム">
+				<img class="_idGenObjectAttribute-." src=".*-web-resources/image/(.*?)" alt="" />
+			</div>
+		→　<p><img src="../image/$1" alt="" class="fit" /></p>
+
+			<div id="_idContainer...">
+				<img class="_idGenObjectAttribute-1" src="gatest-web-resources/image/(.*?)" alt="" />
+			</div>
+		→	<p><img src="../image/$1" alt="" class="fit" /></p>
+
+
+目次
+	htmlで
+	<a href="target.html#_idTextAnchor000">
+		→	<a href="target.html#toc-000">
+
+	(対応本文中id例)	
+	<p class="タイトル"><a id="_idTextAnchor001"></a>君の瞳に恋してる</p>
+		→　<p class="タイトル"><a id="toc-001"></a>君の瞳に恋してる</p>
+
+
+
+・最後												//この変換はxhtml出力時かもしれない
+	<div class="_idGenStoryDirection-1">			
+		→　<div class="m-left-0em50">				//テンプレの本文に合わせ
+	
+
+
+・元htmlはリンク付にInDesign上でしてある
+	↓
+navigation-documents.xhtml の作り方
+	注！　リンクのidは000からだが、001からにできないか、それともする必要はないか。
+・元htmlから目次部分だけカット、別保存
+手	・<p>を<li>に変換
+手	・余分なspan class等（ルビとか）のタグを除去
+手	・章だけ、あるいは節だけにする
+手	・リンクのidを整える
+	・リンク先のxhtmlをどう入力するか？
+	・整形したら全体コピー
+・outputに出力されたnavigation-documents.xhtmlの印字部分にペースト
+
+p-toc.xhtml（目次ページ）の作り方
+・元html（リンク付）から、目次部分だけカット、別保存
+		文章部分の余分な要素を削除
+			</span><span class="ハイパーリンク">　をカット　→　spanの最初と最後だけ残す
+		
+		▼検索置換
+		大項目（例）
+		<p class="目次_大"><a href="target.html#_idTextAnchor000"><span class="ハイパーリンク">第１章&#9;あの時君は若かった　〜少年時代</span></a></p>
+		を、
+		<p class="目次_大">(.*?)</p>
+		で検索
+		<div class="m-right-1em">
+		<p>$1</p>
+		</div>
+		で置換
+
+		小項目（例）
+		<p class="目次">&#9;フィリップス配属／洋盤の管理とジャズの編成／ウォーカー・ブラザーズ</p>
+		<p class="目次">&#9;来日記念録音盤／映画音楽／洋盤の邦題あれこれ</p>
+		を
+		<p class="目次">(.*?)</p>
+		で検索（1行ずつ）
+		<div class="start-5em60">
+		<div class="gfont font-0em90">
+		<p>$1</p>
+		</div>
+		</div>
+		で置換
+
+		ほか
+		<a href="target.html#toc-009">を、navigetion処理と同じ階層にしておく要 <a href="xhtml/target.html#toc-012">
+
+
+
+＜細かい変換＞
+・タブ文字。消去
+	&#9;
+
+
+
+＜考え中＞
+htmlのカット中、リンク先（<a id="_idTextAnchor000">●●●</a>）があったら、xhtmファイル名を記録、配列に。
+
+<a id="toc-000"></a>
+
+＜ほか＞
+・アキ改行には、
+　<p><br /></p>
+　を使うらしい
+
+・元htmlの末尾
+		</body>
+		</html>
+	を消す
+
+
+＜バグ残り＞
+・重複
+	standardに用意済のimageタグ、
+	画像フォルダから作られるimageタグ
+		→　materialのimageフォルダを２つに分けてみた
+			→　とちゅう
+
+・前付・後付ページと普通ページの出力並びにopf内記述の整合性
+	画像取得のところから
+
+
+
+8/20作業にて
+
+<div class="_idGenObjectLayout-1">
+			<div id="_idContainer0.." class="基本グラフィックフレーム">
+			</div>
+		</div>
+をカラ要素として消す
+
+
+
+
+
+

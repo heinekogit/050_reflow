@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book>
+  <chapter>
+    <title>Chapter 1: Introduction</title>
+    <section>
+      <heading>Section 1.1: Overview</heading>
+      <p>This is the first paragraph of the section.</p>
+      <p>This is the second paragraph of the section.</p>
+    </section>
+    <section>
+      <heading>Section 1.2: Details</heading>
+      <p>This is the first paragraph of the next section.</p>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Chapter 2: Main Content</title>
+    <section>
+      <heading>Section 2.1: Analysis</heading>
+      <p>This is a paragraph in chapter 2.</p>
+    </section>
+  </chapter>
+</book>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

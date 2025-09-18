@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book>
+  <h1_chapter>
+    <h1_title>第1章: はじめに</h1_title>
+    <h2_section>
+      <h2_title>1.1節: 概要</h2_title>
+      <h3_subsection>
+        <h3_title>1.1.1項: 詳細な説明</h3_title>
+        <p>これはセクション1.1.1の段落です。</p>
+      </h3_subsection>
+      <p>これはセクションの最初の段落です。</p>
+      <p>これはセクションの2番目の段落です。</p>
+    </h2_section>
+    <h2_section>
+      <h2_title>1.2節: 詳細</h2_title>
+      <h3_subsection>
+        <h3_title>1.2.1項: 補足情報</h3_title>
+        <p>これはセクション1.2.1の段落です。</p>
+      </h3_subsection>
+      <p>これは次のセクションの最初の段落です。</p>
+    </h2_section>
+  </h1_chapter>
+  <h1_chapter>
+    <h1_title>第2章: 本文</h1_title>
+    <h2_section>
+      <h2_title>2.1節: 分析</h2_title>
+      <h3_subsection>
+        <h3_title>2.1.1項: 分析の詳細</h3_title>
+        <p>これは第2章2.1.1項の段落です。</p>
+      </h3_subsection>
+      <p>これは第2章の段落です。</p>
+    </h2_section>
+  </h1_chapter>
+</book>

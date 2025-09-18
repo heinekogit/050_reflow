@@ -1,0 +1,50 @@
+
+
+
+＜スニペットを作成して配置する方法＞　--------------------------------------------------------
+
+    スニペットの設定:
+        コマンドパレットを開く（Ctrl + Shift + P）。
+        Preferences: Configure User Snippets と入力し、選択します。
+        新規スニペットファイルを作成するか、既存の言語用スニペットを編集します。
+
+    スニペットの作成:
+        スニペットファイルが開いたら、以下のようにスニペットを追加します。たとえば、<br /> タグを簡単に挿入できるスニペットを作成する例です：
+
+
+{
+  "Insert line break": {
+    "prefix": "br",
+    "body": [
+      "<br />"
+    ],
+    "description": "Insert a line break"
+  }
+}
+
+
+例：複数のスニペットを含むスニペットファイル
+    ("HTML Break"の部分名称は任意。他と被らないようにする)
+{
+    "HTML Break": {
+        "prefix": "brn",
+        "body": ["<br />"],
+        "description": "Insert a line break"
+    },
+    "HTML Paragraph": {
+        "prefix": "p",
+        "body": [
+            "<p>${1:content}</p>"
+        ],
+        "description": "Insert a paragraph"
+    },
+    "HTML Heading 1": {
+        "prefix": "h1",
+        "body": [
+            "<h1>${1:Heading}</h1>"
+        ],
+        "description": "Insert a level 1 heading"
+    }
+}
+
+--------------------------------------------------------

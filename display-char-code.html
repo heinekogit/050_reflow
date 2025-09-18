@@ -1,0 +1,26 @@
+<!-- c:\Users\tomoki.kawakubo\050\display-char-code.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Char Code</title>
+</head>
+<body>
+    <textarea id="textArea" rows="10" cols="50" placeholder="Type here..."></textarea>
+
+    <script>
+        const textArea = document.getElementById('textArea');
+
+        textArea.addEventListener('select', () => {
+            const selection = textArea.value.substring(textArea.selectionStart, textArea.selectionEnd);
+            if (selection.length === 1) {
+                const charCode = selection.charCodeAt(0);
+                window.history.replaceState(null, '', `#charCode=${charCode}`);
+            } else {
+                window.history.replaceState(null, '', window.location.pathname);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>縦組みのブロック配置</title>
+  <style>
+    /* 縦組み用 */
+    .vrtl {
+      writing-mode: vertical-rl; /* 縦書き（右から左へ進む） */
+      height: 300px;            /* 親要素の高さを指定 */
+      border: 1px solid black;  /* 親要素の枠線 */
+      display: flex;            /* フレックスボックスで位置を調整 */
+      flex-direction: column;   /* フレックスアイテムを縦方向に配置 */
+    }
+    .vrtl .block-align-start  { margin: 0 0 auto 0; } /* 上寄せ */
+    .vrtl .block-align-center { margin: auto 0;     } /* 中央寄せ */
+    .vrtl .block-align-end    { margin: auto 0 0 0; } /* 下寄せ */
+    /* 子要素のスタイル */
+    .block {
+      background-color: lightblue;
+      padding: 10px;
+      border: 1px solid blue;
+      width: 80px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>縦組みのブロック配置例</h1>
+
+  <!-- 上寄せ -->
+  <div class="vrtl">
+    <div class="block block-align-start">上寄せ</div>
+  </div>
+  <br>
+
+  <!-- 中央寄せ -->
+  <div class="vrtl">
+    <div class="block block-align-center">中央寄せ</div>
+  </div>
+  <br>
+
+  <!-- 下寄せ -->
+  <div class="vrtl">
+    <div class="block block-align-end">下寄せ</div>
+  </div>
+
+</body>
+</html>

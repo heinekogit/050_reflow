@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:epub="http://www.idpf.org/2007/ops"
+      xml:lang="ja">
+<head>
+  <meta charset="UTF-8"/>
+  <title>ナビゲーション</title>
+</head>
+<body>
+  <nav epub:type="toc">
+    <h1>ナビゲーション</h1>
+    <!-- 目次がないので、追加のコンテンツは不要 -->
+  </nav>
+</body>
+</html>

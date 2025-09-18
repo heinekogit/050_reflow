@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+
+/* 通常の枠囲みスタイル */
+.box {
+    border: 1px solid black; /* 黒い1ピクセルの実線枠線 */
+    padding: 10px; /* 内側の余白 */
+    margin: 10px 0; /* 外側の余白 */
+    background-color: #f9f9f9; /* 背景色 */
+}
+
+
+/* 角が丸い枠囲み */
+.box-rounded {
+    border: 2px solid black; /* 2ピクセルの実線枠線 */
+    border-radius: 10px; /* 角の丸み */
+    padding: 15px; /* 内側の余白 */
+    margin: 15px 0; /* 外側の余白 */
+    background-color: #e0e0e0; /* 背景色 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

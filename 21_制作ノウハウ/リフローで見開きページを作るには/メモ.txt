@@ -1,0 +1,30 @@
+
+
+<spine
+以下の、
+
+（例）
+<itemref linear="yes" idref="p-002" properties="page-spread-right"/>
+<itemref linear="yes" idref="p-003"/>
+
+見開き用に、右ページだけ固定としている。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

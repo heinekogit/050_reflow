@@ -1,0 +1,38 @@
+
+<spine page-progression-direction="rtl">
+
+<itemref linear="yes" idref="p-cover" properties="rendition:layout-pre-paginated rendition:spread-none rendition:page-spread-center"/>
+<itemref linear="yes" idref="p-titlepage" properties="page-spread-left"/>
+<itemref linear="yes" idref="p-toc"/>
+<itemref linear="yes" idref="p-001"/>
+
+
+
+の部分。
+epub画面を広げるとわかるが、
+本扉ページを左にしている。
+これで、そうやって広げた時に、右に本扉、左に目次や本文、という見た目を避けることができる。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

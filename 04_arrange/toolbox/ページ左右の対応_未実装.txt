@@ -1,0 +1,37 @@
+
+（サンプル）
+
+standard.opの
+<spine 
+に、
+
+<itemref linear="yes" idref="p-022"/>
+	↓
+<itemref linear="yes" idref="p-022" properties="page-spread-right"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

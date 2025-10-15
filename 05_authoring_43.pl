@@ -85,6 +85,7 @@ my @noteref_ids;
     my $toc_id_to_filename_ref;                  # リファレンスを作成
     my @id_to_filename;
 my %id_to_filename;
+my %opt;
 
 our @anno_id_to_filename_ref;                                        # IDからファイル名へのマッピング
 
@@ -491,6 +492,13 @@ my $gazou_tags_ref = gazou_glob(\@standard_opf);
 my $item_tags_str = join "\n", @$item_tags_ref;
 my $spine_tags_str = join "\n", @$spine_tags_ref;
 
+my ($uuid, $modified);
+if (exists $opt{force_uuid_modified}) {
+    ($uuid, $modified) = @{ $opt{force_uuid_modified} };
+} else {
+    ($uuid, $modified) = gen_uuid_and_modified();
+}
+
 foreach my $line (@standard_opf) {
 	$line =~ s/●タイトル名●/$koumoku_content[0]/g;
     $line =~ s/●話巻順番●/$koumoku_content[1]/g;   			 #2L以上は使わない
@@ -510,7 +518,11 @@ foreach my $line (@standard_opf) {
     if ($koumoku_content[5] eq "no") {         
         $line =~ s/<item media-type="application\/xhtml\+xml" id="p-toc" href="xhtml\/p-toc.xhtml"\/>\n//g;
         $line =~ s/<itemref linear="yes" idref="p-toc"\/>\n//g;
+
     }
+
+    # UUID placeholder replacement
+    $line =~ s/●UUID●/$uuid/g;
 
     # annotationの処理
     if ($koumoku_content[6] eq "yes") {         
@@ -524,10 +536,11 @@ foreach my $line (@standard_opf) {
     }
 
 	# 現在の日時を取得
-	my $dt = DateTime->now;
-	# ISO 8601形式で出力
-	my $iso8601_string = $dt->iso8601 . 'Z';
-    $line =~ s/●作業日時●/$iso8601_string/g;   	 
+	my $modified_value = $modified // do {
+		my $dt = DateTime->now;
+		$dt->iso8601 . 'Z';
+	};
+    $line =~ s/●作業日時●/$modified_value/g;   	 
 
     push @modified_opf, $line;
 }
@@ -607,14 +620,29 @@ sub gazou_glob {
 
 #   	 $koumoku_name[4];   							 #話のファイル名
 
-   	 mkdir("06_output/$koumoku_content[3]", 0755) or die "話のフォルダを作成できませんでした\n";
-   	 mkdir("06_output/$koumoku_content[3]/item", 0755) or die "itemフォルダを作成できませんでした\n";
-   	 mkdir("06_output/$koumoku_content[3]/META-INF", 0755) or die "META-INFのフォルダを作成できませんでした\n";
-   	 mkdir("06_output/$koumoku_content[3]/item/xhtml", 0755) or die "xmlフォルダを作成できませんでした\n";
-   	 mkdir("06_output/$koumoku_content[3]/item/style", 0755) or die "styleのフォルダを作成できませんでした\n";
-   	 mkdir("06_output/$koumoku_content[3]/item/image", 0755) or die "話の画像のフォルダを作成できませんでした\n";
+	unless (-d "06_output/$koumoku_content[3]") {
+		mkdir("06_output/$koumoku_content[3]", 0755) or die "話のフォルダを作成できませんでした\n";
+	}
+	unless (-d "06_output/$koumoku_content[3]/item") {
+		mkdir("06_output/$koumoku_content[3]/item", 0755) or die "itemフォルダを作成できませんでした\n";
+	}
+	unless (-d "06_output/$koumoku_content[3]/META-INF") {
+		mkdir("06_output/$koumoku_content[3]/META-INF", 0755) or die "META-INFのフォルダを作成できませんでした\n";
+	}
+	unless (-d "06_output/$koumoku_content[3]/item/xhtml") {
+		mkdir("06_output/$koumoku_content[3]/item/xhtml", 0755) or die "xmlフォルダを作成できませんでした\n";
+	}
+	unless (-d "06_output/$koumoku_content[3]/item/style") {
+		mkdir("06_output/$koumoku_content[3]/item/style", 0755) or die "styleのフォルダを作成できませんでした\n";
+	}
+	unless (-d "06_output/$koumoku_content[3]/item/image") {
+		mkdir("06_output/$koumoku_content[3]/item/image", 0755) or die "話の画像のフォルダを作成できませんでした\n";
+	}
 
-   	 mkdir("06_output/used_sozai_$koumoku_content[3]", 0755) or die "使用済データのフォルダを作成できませんでした\n";
+	unless (-d "06_output/used_sozai_$koumoku_content[3]") {
+		mkdir("06_output/used_sozai_$koumoku_content[3]", 0755) or die "使用済データのフォルダを作成できませんでした\n";
+	}
+
 
    	 #    テンプレよりテキスト類のコピー    -----------    
 
@@ -986,5 +1014,33 @@ sub make_page_annotation {
         print $output_fh "$temp_line";
     }
     close($output_fh);
+}
+
+# 						    ===========================================================================
+
+# ---- 生成専用：UUID(urn:uuid:...) と dcterms:modified(UTC) を返す ----
+use POSIX qw(strftime);
+
+sub gen_uuid_and_modified {
+    my $uuid = eval {
+        require Data::UUID;
+        my $ug = Data::UUID->new;
+        'urn:uuid:' . lc $ug->create_str();
+    } || do {
+        # フォールバック: 外部依存なし v4風
+        my @h = (0..9, 'a'..'f');
+        my $r = sub { join '', map { $h[int rand @h] } 1..$_[0] };
+        sprintf(
+            'urn:uuid:%s-%s-4%s-%s%s-%s',
+            $r->(8), $r->(4), $r->(3),
+            (qw(8 9 a b))[int rand 4], $r->(3),
+            $r->(12)
+        );
+    };
+
+    my $modified = strftime("%Y-%m-%dT%H:%M:%SZ", gmtime);  # UTC/Z
+
+    # 返却：配列 or ハッシュ、好きな方で。ここでは配列を採用
+    return ($uuid, $modified);
 }
 

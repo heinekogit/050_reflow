@@ -1,0 +1,35 @@
+# pattern	<REPLACE_ME>	flags	#comment
+<p\b[^>]*class=(?:['\"])?MsoHeading1(?:['\"])?:?[^>]*>(.*?)</p>\t<h1 class=\"h1_章タイトル\">$1</h1>\tgsi\tp.MsoHeading1 → h1_章タイトル
+<p\b[^>]*class=(?:['\"])?MsoHeading2(?:['\"])?:?[^>]*>(.*?)</p>\t<h2 class=\"h2_節タイトル\">$1</h2>\tgsi\tp.MsoHeading2 → h2_節タイトル
+<p\b[^>]*class=(?:['\"])?MsoHeading3(?:['\"])?:?[^>]*>(.*?)</p>\t<h3 class=\"h3_項タイトル\">$1</h3>\tgsi\tp.MsoHeading3 → h3_項タイトル
+<p\b[^>]*class=(?:['\"])?MsoHeading4(?:['\"])?:?[^>]*>(.*?)</p>\t<h4 class=\"h4_目タイトル\">$1</h4>\tgsi\tp.MsoHeading4 → h4_目タイトル
+<p\b[^>]*class=(?:['\"])?h1(?:['\"])?:?[^>]*>(.*?)</p>\t<h1 class=\"h1_章タイトル\">$1</h1>\tgsi\tp.h1 → h1_章タイトル
+<p\b[^>]*class=(?:['\"])?h2(?:['\"])?:?[^>]*>(.*?)</p>\t<h2 class=\"h2_節タイトル\">$1</h2>\tgsi\tp.h2 → h2_節タイトル
+<p\b[^>]*class=(?:['\"])??h3(?:['\"])?:?[^>]*>(.*?)</p>\t<h3 class=\"h3_項タイトル\">$1</h3>\tgsi\tp.h3 → h3_項タイトル
+<p\b[^>]*class=(?:['\"])??h4(?:['\"])?:?[^>]*>(.*?)</p>\t<h4 class=\"h4_目タイトル\">$1</h4>\tgsi\tp.h4 → h4_目タイトル
+<p\b([^>]*)style=(?:['\"]).*?mso-outline-level:\s*1.*?(?:['\"]).*?>(.*?)</p>\t<h1 class=\"h1_章タイトル\"$1>$2</h1>\tgsi\tmso-outline-level:1 → H1
+<p\b([^>]*)style=(?:['\"]).*?mso-outline-level:\s*2.*?(?:['\"]).*?>(.*?)</p>\t<h2 class=\"h2_節タイトル\"$1>$2</h2>\tgsi\tmso-outline-level:2 → H2
+<p\b([^>]*)style=(?:['\"]).*?mso-outline-level:\s*3.*?(?:['\"]).*?>(.*?)</p>\t<h3 class=\"h3_項タイトル\"$1>$2</h3>\tgsi\tmso-outline-level:3 → H3
+<p\b([^>]*)style=(?:['\"]).*?mso-outline-level:\s*4.*?(?:['\"]).*?>(.*?)</p>\t<h4 class=\"h4_目タイトル\"$1>$2</h4>\tgsi\tmso-outline-level:4 → H4
+<p\b([^>]*)style=(?:['\"]).*?text-indent:\s*(?:18|19|20)(?:\.0)?pt.*?(?:['\"]).*?>(.*?)</p>\t<p class=\"イデ1\"$1>$2</p>\tgsi\ttext-indent≈20pt → イデ1
+<p\b([^>]*)style=(?:['\"]).*?text-indent:\s*1(?:\.0)?em.*?(?:['\"]).*?>(.*?)</p>\t<p class=\"イデ1\"$1>$2</p>\tgsi\ttext-indent≈1em → イデ1
+<p\b([^>]*)style=(?:['\"]).*?margin-left:\s*2(?:\.0)?em[^;]*;(?![^'\"]*text-indent:\s*-).*?(?:['\"]).*?>(.*?)</p>\t<p class=\"イデ2\"$1>$2</p>\tgsi\tmargin-left:2em (非ぶら下がり) → イデ2
+<p\b([^>]*)style=(?:['\"]).*?margin-left:\s*3(?:\.0)?em[^;]*;(?![^'\"]*text-indent:\s*-).*?(?:['\"]).*?>(.*?)</p>\t<p class=\"イデ3\"$1>$2</p>\tgsi\tmargin-left:3em (非ぶら下がり) → イデ3
+<p\b([^>]*)style=(?:['\"]).*?margin-left:\s*2(?:\.0)?em[^;]*;[^'\"]*text-indent:\s*-1(?:\.0)?em.*?(?:['\"]).*?>(.*?)</p>\t<p class=\"イデ1 ブラ1\"$1>$2</p>\tgsi\t2em / -1em → イデ1ブラ1
+<p\b([^>]*)style=(?:['\"]).*?margin-left:\s*3(?:\.0)?em[^;]*;[^'\"]*text-indent:\s*-1(?:\.0)?em.*?(?:['\"]).*?>(.*?)</p>\t<p class=\"イデ2 ブラ1\"$1>$2</p>\tgsi\t3em / -1em → イデ2ブラ1
+<p\b([^>]*)style=(?:['\"]).*?margin-left:\s*3(?:\.0)?em[^;]*;[^'\"]*text-indent:\s*-2(?:\.0)?em.*?(?:['\"]).*?>(.*?)</p>\t<p class=\"イデ1 ブラ2\"$1>$2</p>\tgsi\t3em / -2em → イデ1ブラ2
+<p\b[^>]*class=(?:['\"])?(?:MsoFootnoteText|FootnoteText)(?:['\"])?:?[^>]*>(.*?)</p>\t<p class=\"脚注\">$1</p>\tgsi\t脚注既定クラス → 脚注
+<p\b([^>]*)style=(?:['\"]).*?mso-element:\s*footnote.*?(?:['\"]).*?>(.*?)</p>\t<p class=\"脚注\"$1>$2</p>\tgsi\tmso-element:footnote → 脚注
+<p\b([^>]*)style=(?:['\"]).*?border(?:-.*)?:\s*[^;\"']+.*?(?:['\"]).*?>(.*?)</p>\t<p class=\"枠\"$1>$2</p>\tgsi\tborder指定 → 枠
+<p\b([^>]*)style=(?:['\"]).*?(?:vertical-align:\s*bottom|baseline-source:\s*font).*?(?:['\"]).*?>(.*?)</p>\t<p class=\"下揃え\"$1>$2</p>\tgsi\t縦位置ヒント → 下揃え
+<p\b[^>]*class=(?:['\"])?ListParagraph(?:['\"])?:?[^>]*>(.*?)</p>\t<p class=\"list-paragraph\">$1</p>\tgsi\tListParagraph → list-paragraph
+<p\b([^>]*)style=(?:['\"]).*?mso-list:[^;\"']*level1.*?(?:['\"]).*?>(.*?)</p>\t<p class=\"イデ1\"$1>$2</p>\tgsi\tmso-list level1 → イデ1
+<p\b([^>]*)style=(?:['\"]).*?mso-list:[^;\"']*level2.*?(?:['\"]).*?>(.*?)</p>\t<p class=\"イデ2\"$1>$2</p>\tgsi\tmso-list level2 → イデ2
+<p\b([^>]*)style=(?:['\"]).*?mso-list:[^;\"']*level3.*?(?:['\"]).*?(?:['\"]).*?>(.*?)</p>\t<p class=\"イデ3\"$1>$2</p>\tgsi\tmso-list level3 → イデ3
+<p>\s*</p>\t<p><br/></p>\tgsi\t空段落保持
+src=\"(?:\.\/)?(?:media|images)\/\tsrc=\"../image/\tgi\t画像パス統一（必要なら）
+</?o:p>\t\tgi\tOfficeタグ削除（掃除フェーズで）
+\sstyle=\"[^\"]*mso-[^\"]*\"\t\tgi\tmso-* 削除（推定後に）
+<span[^>]*mso[^>]*>\t\tgi\tmso入りspan削除（推定後に）
+</span>\t\tgi\tspan閉じ削除（推定後に）
+&nbsp;\t&#160;\tgi\tnbsp正規化

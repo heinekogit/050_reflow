@@ -10,8 +10,8 @@ use Getopt::Long;
 
 # ======== 既定パス（あなたの指定） ========
 my $ROOT    = 'C:\Users\tomoki.kawakubo\050_reflow';
-my $RULES   = $ROOT . '\\00_素材_Word\rules\word_left_patterns.tsv';
-my $TARGET  = $ROOT . '\\00_素材_Word';
+my $RULES   = $ROOT . '\\03_setup\toolbox\rules\word_left_patterns.tsv';
+my $TARGET  = $ROOT . '\\03_setup\word.html';
 my $SUFFIX  = '_norm';       # 出力ファイル名のサフィックス
 my $ENC     = 'utf-8';       # HTMLエンコーディング想定（暫定）
 my $DRYRUN  = 0;
@@ -74,22 +74,30 @@ sub apply_rules {
 }
 
 # ======== 対象ファイル列挙 ========
-sub list_html_files {
-  my ($dir) = @_;
-  opendir(my $dh, $dir) or die "[ERR] Cannot open target dir: $dir\n";
-  my @files = grep { /\.(?:html?|HTML?)$/ && -f "$dir\\$_" } readdir($dh);
-  closedir $dh;
-  return [ map { "$dir\\$_" } @files ];
+sub list_html_targets {
+  my ($path) = @_;
+
+  if (-d $path) {
+    opendir(my $dh, $path) or die "[ERR] Cannot open target dir: $path\n";
+    my @files = grep { /\.(?:html?|HTML?)$/ && -f "$path\\$_" } readdir($dh);
+    closedir $dh;
+    return [ map { "$path\\$_" } @files ];
+  }
+
+  if (-f $path) {
+    die "[ERR] Target file is not HTML: $path\n" unless $path =~ /\.(?:html?|HTML?)$/;
+    return [ $path ];
+  }
+
+  die "[ERR] Target not found: $path\n";
 }
 
 # ======== メイン ========
 die "[ERR] Rules not found: $RULES\n"  unless -f $RULES;
-die "[ERR] Target dir not found: $TARGET\n" unless -d $TARGET;
-
 my $rules = load_rules($RULES);
 print "[INFO] Loaded rules: ", scalar(@$rules), " from $RULES\n";
 
-my $files = list_html_files($TARGET);
+my $files = list_html_targets($TARGET);
 if (!@$files) {
   print "[INFO] No HTML files in $TARGET\n";
   exit 0;

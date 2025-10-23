@@ -54,7 +54,7 @@ open my $out_target2, '>:encoding(UTF-8)', $output_file2 or die "Cannot open pre
     $destination_annotation_file = 'C:/Users/tomoki.kawakubo/050/03_setup/arrange_annotation.xhtml';
 
     if (defined $koumoku_content[0][6] && $koumoku_content[0][6] eq "yes") {
-        copy($source_annotation_tempfile, $destination_annotation_file) or die "ファイルのコピーに失敗しました: $!";
+        copy($source_annotation_tempfile, $destination_annotation_file) or die "file copy failed: $!";
         print "File copied and renamed to $destination_annotation_file\n";
     }
 
@@ -62,7 +62,7 @@ open my $out_target2, '>:encoding(UTF-8)', $output_file2 or die "Cannot open pre
     my $source_okuduke_file = 'C:/Users/tomoki.kawakubo/050/03_setup/toolbox/template_okuduke_header.txt';
     my $destination_okuduke_file = 'C:/Users/tomoki.kawakubo/050/03_setup/arrange_colophon.xhtml';
 
-    copy($source_okuduke_file, $destination_okuduke_file) or die "ファイルのコピーに失敗しました: $!";  
+    copy($source_okuduke_file, $destination_okuduke_file) or die "file copy failed: $!";  
 
 
 # 本体の処理 ===========================================================================
